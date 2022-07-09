@@ -1,0 +1,17 @@
+.big {
+    font-size: 2em;
+  }
+
+  .blue {
+    color: blue;
+  }
+  
+  #scrollable {
+    position: relative;
+    background-color: lightblue;
+    height: 70px;
+    padding: 10px;
+    border: 5px solid black;
+    margin: 1em;
+    overflow: auto;
+  }
