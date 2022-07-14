@@ -5,6 +5,8 @@ let lastTimerStartTime = 0;
 let millisElapsedBeforeLastStart = 0; 
 
 const timer = document.getElementById('timer');
+const cat = document.getElementById('cat');
+
 const startButton = document.getElementById('start-button');
 const stopButton = document.getElementById('stop-button');
 const resetButton = document.getElementById('reset-button');
@@ -35,7 +37,7 @@ function stopTimer() {
 
 function resetTimer() {
   resetButton.disabled = true;
-  timer.textContext = '00:00:000';
+  timer.textContent = '00:00:000';
   
   millisElapsedBeforeLastStart = 0;
 }
@@ -49,7 +51,8 @@ function updateTimer() {
   const secondsText = formatNumber(Math.floor(secondsElapsed) % 60, 2);
   const minutesText = formatNumber(Math.floor(minutesElapsed), 2);
 
-  timer.textContext = `${minutesText}:${secondsText}:${millisText}`;
+  timer.textContent = `${minutesText}:${secondsText}:${millisText}`;
+  
 }
 
 function formatNumber(number, desiredLength) {
