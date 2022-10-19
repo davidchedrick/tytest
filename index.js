@@ -1,66 +1,60 @@
-const INTERVAL_MS = 1000 / 60;
+import { createStore } from "redux";
 
-let timerID;
-let lastTimerStartTime = 0;
-let millisElapsedBeforeLastStart = 0; 
+/*
+Features: 
+- a counter that increments every second
+- a button to manually increase the count
+- a button to manually decrease the count
+- a button to toggle whether the count is increasing or not
 
-const timer = document.getElementById('timer');
-const cat = document.getElementById('cat');
+To Do:
+- Decide what you state your application needs, and set up the initial state
+- Update the reducer to handle actions for each feature
+- Dispatch actions to update state
+- Use the state in the render function to determine what is displayed
 
-const startButton = document.getElementById('start-button');
-const stopButton = document.getElementById('stop-button');
-const resetButton = document.getElementById('reset-button');
+*/ 
 
-startButton.addEventListener('click', startTimer);
-stopButton.addEventListener('click', stopTimer);
-resetButton.addEventListener('click', resetTimer);
-
-function startTimer() {
-  startButton.disabled = true;
-  stopButton.disabled = false;
-  resetButton.disabled = true;
-
-  lastTimerStartTime = Date.now();
-  
-  timerID = setInterval(updateTimer, INTERVAL_MS);
+const initialState = {
+    count: 0,
+    running: true
 }
 
-function stopTimer() {
-  startButton.disabled = false;
-  stopButton.disabled = true;
-  resetButton.disabled = false;
-
-  millisElapsedBeforeLastStart += Date.now() - lastTimerStartTime;
-  
-  clearInterval(timerID);
+function reducer(state = initialState, action) {
+    return state
 }
 
-function resetTimer() {
-  resetButton.disabled = true;
-  timer.textContent = '00:00:000';
-  
-  millisElapsedBeforeLastStart = 0;
+const store = createStore(reducer)
+
+store.subscribe(render)
+
+function render() {
+    const state = store.getState()
+    const count = document.querySelector("#count")
+    
+    // get the current count and display it
+    count.textContent = `Count: ${0}`
+    
+    // show a play button or pause button based on state
+    document.querySelector("#play").textContent = true ? "⏸" : "▶️"
 }
 
-function updateTimer() {
-  const millisElapsed = Date.now() - lastTimerStartTime + millisElapsedBeforeLastStart;
-  const secondsElapsed = millisElapsed / 1000;
-  const minutesElapsed = secondsElapsed / 60;
+setInterval(() => {
+    // check if the app is paused or not
+    if (true) {
+        // dispatch an action to increase the count by 1
+    }
+}, 1000)
 
-  const millisText = formatNumber(millisElapsed % 1000, 3);
-  const secondsText = formatNumber(Math.floor(secondsElapsed) % 60, 2);
-  const minutesText = formatNumber(Math.floor(minutesElapsed), 2);
+document.querySelector("#plus").addEventListener("click", () => {
+    // dispatch an action to increase the count by 1
+})
 
-  timer.textContent = `${minutesText}:${secondsText}:${millisText}`;
-  
-}
+document.querySelector("#minus").addEventListener("click", () => {
+    // dispatch an action to decrease the count by 1
+})
 
-function formatNumber(number, desiredLength) {
-  const stringNumber = String(number);
-
-  if (stringNumber.desiredLength > desiredLength) {
-    return stringNumber.slice(0, desiredLength)
-  }
-  
-  return stringNumber.padStart(desiredLength, '0');
-}
+document.querySelector("#play").addEventListener("click", () => {
+    // check if the app is paused or not
+    // dispatch an action to either play or pause the counter
+})
