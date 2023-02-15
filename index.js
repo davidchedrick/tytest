@@ -1,60 +1,33 @@
-import { createStore } from "redux";
+const input = document.querySelector("#todo-input");
+const addButton = document.querySelector("#add-button");
+const list = document.querySelector("#todo-list");
+const title = document.querySelector("h1");
 
-/*
-Features: 
-- a counter that increments every second
-- a button to manually increase the count
-- a button to manually decrease the count
-- a button to toggle whether the count is increasing or not
+addButton.addEventListener("click", addItem);
+input.addEventListener("input", () => {
+    addButton.disabled = input.value.length === 0;
+});
 
-To Do:
-- Decide what you state your application needs, and set up the initial state
-- Update the reducer to handle actions for each feature
-- Dispatch actions to update state
-- Use the state in the render function to determine what is displayed
-
-*/ 
-
-const initialState = {
-    count: 0,
-    running: true
+function addItem() {
+    const li = createListItem(input.value);
+    list.appendChild(li);
+    input.value = "";
+    addButton.disabled = true;
 }
 
-function reducer(state = initialState, action) {
-    return state
+function createListItem(name) {
+    const listItem = document.createElement("li");
+
+    const heading = document.createElement("h2");
+    heading.textContent = name;
+
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "X";
+    deleteButton.classList.add("delete-button");
+    deleteButton.addEventListener("click", () => {
+        deleteButton.parentElement.remove();
+    });
+
+    listItem.append(heading, deleteButton);
+    return listItem;
 }
-
-const store = createStore(reducer)
-
-store.subscribe(render)
-
-function render() {
-    const state = store.getState()
-    const count = document.querySelector("#count")
-    
-    // get the current count and display it
-    count.textContent = `Count: ${0}`
-    
-    // show a play button or pause button based on state
-    document.querySelector("#play").textContent = true ? "⏸" : "▶️"
-}
-
-setInterval(() => {
-    // check if the app is paused or not
-    if (true) {
-        // dispatch an action to increase the count by 1
-    }
-}, 1000)
-
-document.querySelector("#plus").addEventListener("click", () => {
-    // dispatch an action to increase the count by 1
-})
-
-document.querySelector("#minus").addEventListener("click", () => {
-    // dispatch an action to decrease the count by 1
-})
-
-document.querySelector("#play").addEventListener("click", () => {
-    // check if the app is paused or not
-    // dispatch an action to either play or pause the counter
-})
